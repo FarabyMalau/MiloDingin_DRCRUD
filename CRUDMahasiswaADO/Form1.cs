@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -41,7 +41,6 @@ namespace CRUDMahasiswaADO
                 {
                     conn.Open();
                 }
-
                 MessageBox.Show("Koneksi berhasil");
             }
             catch (Exception ex)
