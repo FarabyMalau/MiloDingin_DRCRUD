@@ -18,6 +18,8 @@ namespace CRUDMahasiswaADO
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dBAkademikADODataSet.Mahasiswa' table. You can move, or remove it, as needed.
+            this.mahasiswaTableAdapter.Fill(this.dBAkademikADODataSet.Mahasiswa);
             cmbkJK.Items.Clear();
             cmbkJK.Items.Add("L");
             cmbkJK.Items.Add("P");
@@ -279,6 +281,11 @@ namespace CRUDMahasiswaADO
             txtKodeProdi.Clear();
             dtpTanggalLahir.Value = DateTime.Now;
             txtNIM.Focus();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
