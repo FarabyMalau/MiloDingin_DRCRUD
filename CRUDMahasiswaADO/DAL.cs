@@ -121,3 +121,69 @@ public void DeleteMhs(string nim)
 
     cmd.ExecuteNonQuery();
 }
+
+public void resetData()
+{
+    if (conn.State == ConnectionState.Closed)
+    {
+        conn.Open();
+    }
+
+    string deleteQuery = "DELETE FROM mahasiswa;";
+    SqlCommand cmdDelete = new SqlCommand(deleteQuery, conn);
+    cmdDelete.ExecuteNonQuery();
+
+    string insertQuery = @"
+        INSERT INTO mahasiswa
+        SELECT * FROM mahasiswa_backup;";
+    SqlCommand cmdInsert = new SqlCommand(insertQuery, conn);
+    cmdInsert.ExecuteNonQuery();
+}
+
+1 reference
+public void testInject(string nim)
+{
+    if (conn.State == ConnectionState.Closed)
+    {
+        conn.Open();
+    }
+
+    string query = "Update mahasiswa set nama = 'HACKED' where NIM = " + nim;
+    SqlCommand cmd = new SqlCommand(query, conn);
+    cmd.ExecuteNonQuery();
+}
+
+public DataTable GetMhsByNIM(string nim)
+{
+    if (conn.State == ConnectionState.Closed)
+    {
+        conn.Open();
+    }
+
+    SqlCommand cmd = new SqlCommand("sp_GetMahasiswaByNIM", conn);
+    cmd.CommandType = CommandType.StoredProcedure;
+
+    cmd.Parameters.AddWithValue("pNIM", nim);
+    da = new SqlDataAdapter(cmd);
+
+    dtMahasiswa = new DataTable();
+    da.Fill(dtMahasiswa);
+
+    return dtMahasiswa;
+}
+
+1 reference
+public void InsertLog(string message)
+{
+    if (conn.State == ConnectionState.Closed)
+    {
+        conn.Open();
+    }
+
+    SqlCommand cmd = new SqlCommand("sp_LogMessage", conn);
+
+    cmd.Parameters.AddWithValue("psn", message);
+    cmd.CommandType = CommandType.StoredProcedure;
+    cmd.ExecuteNonQuery();
+}
+
